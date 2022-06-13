@@ -41,16 +41,32 @@ html, body {
 .main {
     border: 2px solid black;
     padding: 40px;
-    display: flex;
-    flex: 1;
     grid-area: main;
+}
+
+.todos {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 6px;
 }
 
 .todo {
     display: flex;
-    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
     border: 2px solid red;
+    padding: 0px 8px;
 
+}
+
+.todo-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.todo-actions img {
+    height: 32px;
 }
 
 footer {
