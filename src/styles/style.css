@@ -28,6 +28,10 @@ html, body {
     height: 108px;
 }
 
+.sidebar,.main {
+    min-height: 100vh;
+}
+
 
 .sidebar {
     display: flex;
@@ -35,7 +39,6 @@ html, body {
     grid-area: sidebar;
     margin-top: 30px;
     background-color: #0284C7;
-    height: 100vh;
 }
 
 .main {
@@ -69,8 +72,16 @@ html, body {
     height: 32px;
 }
 
+.todo-actions:hover {
+    cursor: pointer;
+}
+
 footer {
     grid-area: footer;
+    position: relative;
+    bottom: 0;
+    right: 0;
+    left: 0;
     padding: 20px;
     text-align: center;
     background-color: #000;
