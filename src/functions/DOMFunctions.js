@@ -5,6 +5,14 @@ const TODO_LIST = getTodos();
 
 
 // Clears the content of an HTML element
+const hideSection = (section) => {
+    if(section.className === "active") {
+        section.className = "inactive"
+    } else {
+        section.className = "active"
+    }
+}
+
 
 const clearSection =  (section) => {
     while (section.firstChild) {
@@ -44,6 +52,8 @@ const generateAllTodos = () => {
         const todo_actions_div = document.createElement("div");
         todo_actions_div.className = "todo-actions";
 
+        // TODO probably will need to change the IMG src
+
         const edit_element = document.createElement("img")
         edit_element.id = "edit-todo"
         edit_element.setAttribute("src","edit.png");
@@ -66,11 +76,41 @@ const generateAllTodos = () => {
 
 
         TODOS_HTML.appendChild(todo_div);
+
     })
 
-    /*
+}
 
-                    <div class="todo">
+const generateAllProjects =  () => {
+    
+    const PROJECTS_HTML = document.getElementById("project-list");
+
+    const PROJECT_LIST = getProjects()
+
+    clearSection(PROJECTS_HTML);
+
+    const new_project_button = document.createElement("button");
+    new_project_button.id = "new-project"
+    new_project_button.textContent = "New Project";
+    PROJECTS_HTML.appendChild(new_project_button)
+
+    PROJECT_LIST.forEach((project) => {
+        const project_item = document.createElement("li");
+        project_item.textContent = project.name;
+
+
+        // TODO OPEN THE PROJECT & GENERATE ITS TODOS
+        project_item.addEventListener("click", () => {
+
+        })
+        PROJECTS_HTML.appendChild(project_item)
+
+    })
+}
+        // TODO HTML structure
+            /*
+
+                <div class="todo">
                     <span id="priority">!</span>
                     <h3 id="todo-title">Title</h3>
                     <span id="todo-description">This is a test</span>
@@ -81,6 +121,6 @@ const generateAllTodos = () => {
                     </div>
                 </div>
     */
-}
 
-export {generateAllTodos}
+
+export {generateAllTodos, generateAllProjects, hideSection}

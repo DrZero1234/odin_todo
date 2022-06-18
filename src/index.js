@@ -1,7 +1,7 @@
 import "./styles/style.css"
 import {Todo,Project} from "./functions/todoClasses.js"
 import {getTodos, getProjects, resetStorage} from "./functions/storage.js"
-import {generateAllTodos, clearSection} from "./functions/DOMFunctions.js"
+import {generateAllTodos,generateAllProjects, hideSection} from "./functions/DOMFunctions.js"
 
 // lel
 
@@ -10,9 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const sidebar_todos = document.getElementById("sidebar-todos")
 
     const projects_html = document.getElementById("projects");
+    const PROJECT_LIST_HTML = document.getElementById("project-list")
 
     projects_html.addEventListener("click", () => {
-        console.log("clicked projects")
+        generateAllProjects()
+        hideSection(PROJECT_LIST_HTML)
     })
 
     resetStorage()
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         generateAllTodos()
     })
 
-
+    generateAllTodos();
 })
 console.log(getTodos())
 getProjects()

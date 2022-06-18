@@ -15,6 +15,11 @@ html, body {
 
 }
 
+/* HIDE ELEMENTS WHILE TOGGLING */
+.inactive {
+    display: none;
+}
+
 
 .page-header {
     grid-area: header;
@@ -42,13 +47,17 @@ html, body {
     background-color: #0284C7;
 }
 
+hx {
+    cursor: pointer;
+}
+
 #options {
     list-style-type: none;
 }
 
-#projects {
-    display: flex;
+#project-list {
     flex-direction: column;
+    cursor: pointer;
     flex-wrap: wrap;
     word-break: break-all;
     list-style-type: none;
@@ -57,32 +66,62 @@ html, body {
 
 /* Project text */
 
-#projects > li {
+#project-list > li {
+    list-style-type: none;
 }
 
 
 
 .main {
-
-    border: 2px solid black;
-    padding: 40px;
+    padding: 50px 220px;
     grid-area: main;
+}
+
+.todo-wrapper {
+    display: flex;
+    margin-bottom: 1rem;
+    
+}
+
+.todo-wrapper button {
+    background-color: #0284C7;
+    color: white;
+    font-weight: 800;
+    font-size: 24px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.todo-wrapper button:hover {
+    color: #0284C7;
+    background-color: white;
 }
 
 .todos {
     display: flex;
     flex-direction: column;
     flex: 1;
+    flex-wrap: wrap;
     gap: 6px;
 }
 
 .todo {
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
     border: 2px solid red;
     padding: 0px 8px;
+}
 
+#todo-title,#todo-description {
+    word-break: break-all;
+}
+
+#priority {
+    font-size: 36px;
+    color: red;
+    font-weight: 800;
 }
 
 .todo-actions {
