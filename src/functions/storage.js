@@ -5,11 +5,11 @@ function resetStorage() {
 }
 
 function getTodos() {
-    return localStorage.getItem("Todos")
+    return JSON.parse(localStorage.getItem("Todos"))
 }
 
 function getProjects() {
-    return localStorage.getItem("Projects")
+    return JSON.parse(localStorage.getItem("Projects"))
 }
 
 export {getTodos, getProjects, resetStorage}
