@@ -9,6 +9,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     generateAllProjects()
 
+
+    const first_project_todo = Todo("Project todo test", "This is a test if the project todo is working", "2022-06-19","normal");
+    const project1 = getProject("dd672e84-91bd-4dcd-9df2-d852dfdcaba9")
+    const p1 = Project("Test Project for add todo")
+    console.log(project1)
+
+    p1.addTodo(first_project_todo);
+
+
+
+    console.log(project1)
+
     const sidebar_todos = document.getElementById("sidebar-todos")
 
     const projects_html = document.getElementById("projects");

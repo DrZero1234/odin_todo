@@ -5,7 +5,7 @@ const Project = (name) => {
     let project_todos = [];
     let id = uuidv4()
 
-    const addProject = () => {
+    const storeProject = () => {
         /*
 
         if (localStorage.getItem("Projects") == null) {
@@ -14,12 +14,16 @@ const Project = (name) => {
         */
 
         const project_storage = JSON.parse(localStorage.getItem("Projects"))
-        const project = {id,name, project_todos, addProject};
+        const project = {id,name, project_todos, storeProject};
         project_storage.push(project)
         localStorage.setItem("Projects", JSON.stringify(project_storage))
     }
 
-    return {id,name, project_todos, addProject};
+    const addTodo = (todo) => {
+        Project.project_todos.push(todo);
+    }
+
+    return {id,name, project_todos, storeProject,addTodo};
 }
 
 
