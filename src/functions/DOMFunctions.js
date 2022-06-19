@@ -1,6 +1,11 @@
-import { getTodos,getProjects } from "./storage"
+import { getAllTodos,getAllProjects,getProject } from "./storage"
 
-const TODO_LIST = getTodos();
+document.addEventListener("DOMContentLoaded", () => {
+    
+})
+
+const TODO_LIST = getAllTodos();
+
 
 
 
@@ -14,18 +19,17 @@ const hideSection = (section) => {
 }
 
 
-const clearSection =  (section) => {
+const clearSection =  (section = TODOS_HTML) => {
+    const TODOS_HTML = document.querySelector(".todos")
     while (section.firstChild) {
         section.removeChild(section.lastChild)
     }
 }
 
 const generateAllTodos = () => {
-    const TODOS_HTML = document.querySelector(".todos")
+    const TODOS_HTML = document.querySelector(".todos");
 
-    console.log(TODOS_HTML)
-
-    clearSection(TODOS_HTML)
+    clearSection(TODOS_HTML);
 
     TODO_LIST.forEach((todo) => {
         const todo_div = document.createElement("div");
@@ -82,30 +86,46 @@ const generateAllTodos = () => {
 }
 
 const generateAllProjects =  () => {
+
+    const TODOS_HTML = document.querySelector(".todos")
     
     const PROJECTS_HTML = document.getElementById("project-list");
 
-    const PROJECT_LIST = getProjects()
+    const PROJECT_LIST = getAllProjects()
 
     clearSection(PROJECTS_HTML);
 
     const new_project_button = document.createElement("button");
-    new_project_button.id = "new-project"
+    new_project_button.id = "new-project-btn"
     new_project_button.textContent = "New Project";
     PROJECTS_HTML.appendChild(new_project_button)
 
     PROJECT_LIST.forEach((project) => {
         const project_item = document.createElement("li");
         project_item.textContent = project.name;
+        project_item.id = project.id
 
 
         // TODO OPEN THE PROJECT & GENERATE ITS TODOS
         project_item.addEventListener("click", () => {
-
+            getProject(project.id)
+            clearSection(TODOS_HTML)
+        
         })
         PROJECTS_HTML.appendChild(project_item)
 
     })
+}
+
+const generateProjectTodos = (project) => {
+
+    const TODOS_HTML = document.querySelector(".todos")
+
+    const project_todos = project.project_todos;
+
+    for (todo of project_todos) {
+
+    }
 }
         // TODO HTML structure
             /*
@@ -121,6 +141,8 @@ const generateAllProjects =  () => {
                     </div>
                 </div>
     */
+
+
 
 
 export {generateAllTodos, generateAllProjects, hideSection}
