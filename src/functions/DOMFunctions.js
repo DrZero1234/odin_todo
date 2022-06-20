@@ -31,7 +31,7 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
 
     clearSection(TODOS_HTML);
 
-    todo_list.forEach((todo) => {
+    Array.from(todo_list).forEach((todo) => {
         const todo_div = document.createElement("div");
         todo_div.className = "todo";
 
@@ -108,8 +108,15 @@ const generateAllProjects =  () => {
 
         // TODO OPEN THE PROJECT & GENERATE ITS TODOS
         project_item.addEventListener("click", () => {
+            
             clearSection(TODOS_HTML)
             generateAllTodos(getProject(project.id))
+
+            // changes the title of the todos_title field
+            const todos_title_html = document.getElementById("todos-title")
+            todos_title_html.textContent = project.name
+
+
         
         })
         PROJECTS_HTML.appendChild(project_item)

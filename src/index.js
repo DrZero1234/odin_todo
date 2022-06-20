@@ -1,27 +1,24 @@
 import "./styles/style.css"
 import {Todo,Project} from "./functions/todoClasses.js"
-import {getAllTodos, getAllProjects, getProject, resetStorage} from "./functions/storage.js"
+import {getAllTodos, getAllProjects, getProject, resetStorage, defaulStorage} from "./functions/storage.js"
 import {generateAllTodos,generateAllProjects, hideSection} from "./functions/DOMFunctions.js"
 
 // lel
 
 document.addEventListener("DOMContentLoaded", () => {
 
+
     generateAllProjects()
 
-
-    const first_project_todo = Todo("Project todo test", "This is a test if the project todo is working", "2022-06-19","normal");
-    const project1 = getProject("dd672e84-91bd-4dcd-9df2-d852dfdcaba9")
-    const p1 = Project("Test Project for add todo")
-    console.log(project1)
-
-    p1.addTodo(first_project_todo);
+    const p1 = getProject("dacc1c34-8405-48c3-9d9c-7b06b1146614")
+    const project_todo = Todo("Project_todo", "First project_todo","2022-06-20","normal")
+    console.log(p1)
 
 
 
-    console.log(project1)
 
     const sidebar_todos = document.getElementById("sidebar-todos")
+
 
     const projects_html = document.getElementById("projects");
 
@@ -36,7 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
         hideSection(PROJECT_LIST_HTML)
     })
 
-    sidebar_todos.addEventListener("click",generateAllTodos)
+    sidebar_todos.addEventListener("click", () => {
+        generateAllTodos()
+        const todos_title_html = document.getElementById("todos-title")
+        todos_title_html.textContent = "Every Todos"
+    })
 
     
     console.log(PROJECT_LIST_ITEMS)
