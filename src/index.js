@@ -6,9 +6,16 @@ import {generateAllTodos,generateAllProjects, hideSection} from "./functions/DOM
 // lel
 
 document.addEventListener("DOMContentLoaded", () => {
-    
-    defaulStorage()
 
+    console.log("Projects")
+    console.log(getAllProjects())
+
+    console.log("Todos")
+    console.log(getAllTodos())
+
+
+    console.log("Get todo:")
+    console.log(getTodo("ef088bb6-8803-42ed-b524-799ad4a26349"))
 
     generateAllProjects()
 
@@ -41,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     generateAllTodos();
 })
-console.log(getAllTodos())
-getAllProjects()
+
 
 

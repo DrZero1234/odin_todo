@@ -6,11 +6,26 @@ function resetStorage() {
 }
 
 function getAllTodos() {
+    const todo_arr = []
+
+    for (let project of getAllProjects()) {
+        for (let todo_key of Object.keys(project.project_todos) ) {
+            todo_arr.push(JSON.parse(project.project_todos[todo_key]))
+        }
+    }
+
+    return todo_arr
 
 }
 
 function getAllProjects() {
-    return JSON.parse(localStorage.getItem("Projects"))
+    let arr = []    
+
+    Object.keys(localStorage).forEach((key) => {
+        arr.push(JSON.parse(localStorage.getItem(key)))
+    })
+    return arr
+
 }
 
 function getProject(project_id) {
@@ -19,15 +34,14 @@ function getProject(project_id) {
             return project
         }
     }
-
 }
 
 function getTodo(todo_id) {
     for (let todo of getAllTodos()) {
         if (todo.id === todo_id) {
-            return todo
+            return (todo)
         }
-    }
+    }    
 }
 
 function defaulStorage () {
@@ -43,9 +57,8 @@ function defaulStorage () {
     p2.storeProject();
     p1.pushTodo(todo1);
     p1.pushTodo(todo2);
-    console.log(p1)
-    console.log("lel")
-
+    p2.pushTodo(todo1);
+    p2.pushTodo(todo2)
 
 }
 

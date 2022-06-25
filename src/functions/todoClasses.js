@@ -3,7 +3,7 @@ import {v4 as uuidv4} from "uuid";
 class Project {
     constructor(name) {
         this.id = uuidv4()
-        this.project_todos = new Array();
+        this.project_todos = new Object();
         this.name = name
     }
 
@@ -12,8 +12,8 @@ class Project {
         return this
     }
 
-    pushTodo(todo)  {
-        this.project_todos.push(JSON.stringify(todo))
+    pushTodo(todo){
+        this.project_todos[todo["id"]] = JSON.stringify(todo)
         localStorage.setItem(this.id, JSON.stringify(this))
 
     };
