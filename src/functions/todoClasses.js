@@ -13,9 +13,8 @@ class Project {
     }
 
     pushTodo(todo)  {
-        var project_todos_array = JSON.parse(localStorage.getItem(this.id)).project_todos
-        project_todos_array += project_todos_array.push(JSON.stringify(todo))
-        return this;
+        this.project_todos.push(JSON.stringify(todo))
+        localStorage.setItem(this.id, JSON.stringify(this))
 
     };
 }

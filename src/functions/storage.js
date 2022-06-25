@@ -42,9 +42,11 @@ function defaulStorage () {
     p1.storeProject();
     p2.storeProject();
     p1.pushTodo(todo1);
-    p2.pushTodo(todo2);
+    p1.pushTodo(todo2);
+    console.log(p1)
+    console.log("lel")
 
-    console.log("pushed")
+
 }
 
 export {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage}
