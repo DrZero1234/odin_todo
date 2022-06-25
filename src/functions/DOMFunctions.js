@@ -34,6 +34,7 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
     Array.from(todo_list).forEach((todo) => {
         const todo_div = document.createElement("div");
         todo_div.className = "todo";
+        todo_div.id = todo.id
 
         const todo_priority_elem = document.createElement("span");
         todo_priority_elem.id = "priority";

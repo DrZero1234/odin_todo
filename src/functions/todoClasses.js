@@ -1,32 +1,38 @@
 import {v4 as uuidv4} from "uuid";
 
-const Project = (name) => {
+class Project {
+    constructor(name) {
+        this.id = uuidv4()
+        this.project_todos = new Array();
+        this.name = name
+    }
 
-    let project_todos = [];
-    let id = uuidv4()
+    storeProject() {
+        localStorage.setItem(this.id, JSON.stringify(this));
+        return this
+    }
 
-    const storeProject = () => {
-        /*
+    pushTodo(todo)  {
+        var project_todos_array = JSON.parse(localStorage.getItem(this.id)).project_todos
+        project_todos_array += project_todos_array.push(JSON.stringify(todo))
+        return this;
 
-        if (localStorage.getItem("Projects") == null) {
-            localStorage.setItem("Projects", "[]")
-        }
-        */
-
-        const project_storage = JSON.parse(localStorage.getItem("Projects"))
-        const project = {id,name, project_todos, storeProject,pushTodo};
-        project_storage.push(project)
-        localStorage.setItem("Projects", JSON.stringify(project_storage))
     };
-
-    function pushTodo(todo)  {
-        project_todos.push(todo);
-    };
-
-    return {id, name, project_todos, storeProject, pushTodo};
 }
 
+class Todo {
+    constructor(title,description,date,priority,status="unfinished"){
+        this.id = uuidv4()
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.priority = priority;
+        this.status = status
+    }
 
+}
+
+/*
 const Todo = (title,description,date,priority,status="unfinished") => {
 
     const id = uuidv4()
@@ -41,5 +47,7 @@ const Todo = (title,description,date,priority,status="unfinished") => {
 
     return {id,title,description,date,priority,status,storeTodo}
 }
+
+*/
 
 export {Project,Todo}

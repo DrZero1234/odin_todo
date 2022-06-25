@@ -1,20 +1,16 @@
 import "./styles/style.css"
 import {Todo,Project} from "./functions/todoClasses.js"
-import {getAllTodos, getAllProjects, getProject, resetStorage, defaulStorage} from "./functions/storage.js"
+import {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage} from "./functions/storage.js"
 import {generateAllTodos,generateAllProjects, hideSection} from "./functions/DOMFunctions.js"
 
 // lel
 
 document.addEventListener("DOMContentLoaded", () => {
+    
+    defaulStorage()
 
 
     generateAllProjects()
-
-    const p1 = getProject("dacc1c34-8405-48c3-9d9c-7b06b1146614")
-    const project_todo = Todo("Project_todo", "First project_todo","2022-06-20","normal")
-    console.log(p1)
-
-
 
 
     const sidebar_todos = document.getElementById("sidebar-todos")

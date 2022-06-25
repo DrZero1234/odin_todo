@@ -2,12 +2,11 @@ import { Project,Todo } from "./todoClasses";
 
 
 function resetStorage() {
-    localStorage.setItem("Projects", JSON.stringify([]));
-    localStorage.setItem("Todos", JSON.stringify([]));
+    localStorage.clear()
 }
 
 function getAllTodos() {
-    return JSON.parse(localStorage.getItem("Todos"))
+
 }
 
 function getAllProjects() {
@@ -23,19 +22,29 @@ function getProject(project_id) {
 
 }
 
+function getTodo(todo_id) {
+    for (let todo of getAllTodos()) {
+        if (todo.id === todo_id) {
+            return todo
+        }
+    }
+}
+
 function defaulStorage () {
     resetStorage()
 
-    let p1 = Project("Project1")
-    let p2 = Project("Project2")
+    let p1 = new Project("Project1")
+    let p2 = new Project("Project2")
 
-    let todo1 = Todo("Todo1","First todo", "2022-12-31","normal");
-    let todo2 = Todo("Todo2", "Second tood", "1939-09-01","normal");
+    let todo1 = new Todo("Todo1","First todo", "2022-12-31","normal");
+    let todo2 = new Todo("Todo2", "Second todo", "1939-09-01","normal");
 
     p1.storeProject();
     p2.storeProject();
-    todo1.storeTodo();
-    todo2.storeTodo()
+    p1.pushTodo(todo1);
+    p2.pushTodo(todo2);
+
+    console.log("pushed")
 }
 
-export {getAllTodos, getAllProjects, getProject, resetStorage, defaulStorage}
+export {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage}
