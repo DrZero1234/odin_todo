@@ -1,4 +1,4 @@
-import { getAllTodos,getAllProjects,getProject } from "./storage"
+import { getAllTodos,getAllProjects,getProject, getProjectTodos } from "./storage"
 
 document.addEventListener("DOMContentLoaded", () => {
     
@@ -31,7 +31,7 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
 
     clearSection(TODOS_HTML);
 
-    Array.from(todo_list).forEach((todo) => {
+    todo_list.forEach((todo) => {
         const todo_div = document.createElement("div");
         todo_div.className = "todo";
         todo_div.id = todo.id
@@ -110,16 +110,18 @@ const generateAllProjects =  () => {
         // TODO OPEN THE PROJECT & GENERATE ITS TODOS
         project_item.addEventListener("click", () => {
             
-            clearSection(TODOS_HTML)
-            generateAllTodos(getProject(project.id))
+        
+            const project_todos = getProjectTodos(project.id)
+
+
+            generateAllTodos(project_todos)
 
             // changes the title of the todos_title field
             const todos_title_html = document.getElementById("todos-title")
             todos_title_html.textContent = project.name
-
-
         
         })
+        
         PROJECTS_HTML.appendChild(project_item)
 
     })
@@ -144,8 +146,5 @@ const generateProjectTodos = (project) => {
                     </div>
                 </div>
     */
-
-
-
 
 export {generateAllTodos, generateAllProjects, hideSection}

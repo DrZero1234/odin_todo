@@ -5,6 +5,7 @@ function resetStorage() {
     localStorage.clear()
 }
 
+// Generates an array of every TODO 
 function getAllTodos() {
     const todo_arr = []
 
@@ -18,6 +19,8 @@ function getAllTodos() {
 
 }
 
+
+// Generates an array of every Project
 function getAllProjects() {
     let arr = []    
 
@@ -28,6 +31,7 @@ function getAllProjects() {
 
 }
 
+// Grabs a project with a specific ID
 function getProject(project_id) {
     for (let project of getAllProjects()) {
         if (project.id === project_id) {
@@ -36,12 +40,29 @@ function getProject(project_id) {
     }
 }
 
+
+//Grabs a todo with a specific ID
 function getTodo(todo_id) {
     for (let todo of getAllTodos()) {
         if (todo.id === todo_id) {
             return (todo)
         }
     }    
+}
+
+
+// Generates an array with all of the project´s todo Objects.
+
+
+function getProjectTodos(project_id) {
+    let project_todos = []
+    let todo_keys = Object.keys(getProject(project_id).project_todos)
+    todo_keys.forEach((key) => {
+        project_todos.push(JSON.parse(getProject(project_id).project_todos[key]))
+    })
+
+    return project_todos
+
 }
 
 function defaulStorage () {
@@ -51,15 +72,14 @@ function defaulStorage () {
     let p2 = new Project("Project2")
 
     let todo1 = new Todo("Todo1","First todo", "2022-12-31","normal");
-    let todo2 = new Todo("Todo2", "Second todo", "1939-09-01","normal");
+    let todo2 = new Todo("Todo2", "Second todo", "1939-09-01","urgent");
 
     p1.storeProject();
     p2.storeProject();
     p1.pushTodo(todo1);
     p1.pushTodo(todo2);
     p2.pushTodo(todo1);
-    p2.pushTodo(todo2)
 
 }
 
-export {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage}
+export {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage, getProjectTodos}
