@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Odin Todo</title>
 </head>
 <body>
     <script src="main.js"></script>
@@ -20,14 +20,19 @@
                 <li id="sidebar-todos">Todos</li>
                 <hx id="projects">Projects</hx>
                 <ul id="project-list">
+
+
                 </ul>
                 <hx></hx>
                 <li>Urgent</li>
-                <li>today</li>
+                <li>Today</li>
+                <li>Completed</li>
             </li>
         </div>
 
         <div class="main">
+
+          
             <div class="todo-wrapper">
                 <button id = "add_todo">+ Add todo</button>
                 <h2 id="todos-title">Every Todos</h2>
@@ -35,6 +40,29 @@
             <div class="todos">
 
             </div>
+
+        </div>
+
+
+        <div class="modal active" id="modal">
+            <div class="modal-header">
+                <div class="title">Create new project</div>
+                <button class="close-button">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" class="new-project-form">
+                    <label for="project-name">Name: </label>
+                    <input type="text" name="project-name" id="project-name">
+                    <button class="new-project-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
+
+        <div id="overlay">
+
         </div>
 
         <footer>@The Odin Project</footer>
