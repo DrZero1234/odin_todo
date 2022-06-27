@@ -1,16 +1,16 @@
 import "./styles/style.css"
 import {Todo,Project} from "./functions/todoClasses.js"
 import {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, getProjectTodos, defaulStorage} from "./functions/storage.js"
-import {generateAllTodos,generateAllProjects, hideSection} from "./functions/DOMFunctions.js"
+import {generateAllTodos,generateAllProjects, hideSection, toggleModal} from "./functions/DOMFunctions.js"
 
 // lel
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    defaulStorage()
+    // defaulStorage()
 
     console.log("Projects")
-    console.log(getAllProjects()[0].project_todos)
+    console.log(getAllProjects())
 
     console.log("Project Todos")
     console.log(getProjectTodos(getAllProjects()[0].id))
@@ -25,6 +25,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sidebar_todos = document.getElementById("sidebar-todos")
     const projects_html = document.getElementById("projects");
+
+    // Project Modal toggle
+    const new_project_btn = document.getElementById("new-project-btn")
+    new_project_btn.addEventListener("click", toggleModal)
+
+    const close_modal_btn = document.querySelector(".close-button");
+    close_modal_btn.addEventListener("click",toggleModal)
+
+    const create_project_btn = document.querySelector(".create-project-btn");
+    create_project_btn.addEventListener("click", () => {
+        const name_field = String(document.getElementById("project-name").value)
+        const new_project = new Project(name_field);
+
+        // TODO redirect to new Project TODO´s after Creating a project
+        new_project.storeProject();
+        const stored_project = getProject(new_project.id);
+        toggleModal();
+        generateAllTodos(Array.from(stored_project.project_todos));
+        
+    })
+
+
 
 
     const PROJECT_LIST_HTML = document.getElementById("project-list")

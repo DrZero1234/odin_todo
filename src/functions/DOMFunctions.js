@@ -26,6 +26,8 @@ const clearSection =  (section = TODOS_HTML) => {
     }
 }
 
+// Generates the list of todos in the main section
+
 const generateAllTodos = (todo_list = getAllTodos()) => {
     const TODOS_HTML = document.querySelector(".todos");
 
@@ -55,7 +57,9 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
         todo_date_elem.textContent = todo.date;
 
         const todo_actions_div = document.createElement("div");
+        
         todo_actions_div.className = "todo-actions";
+
 
         // TODO probably will need to change the IMG src
 
@@ -113,7 +117,6 @@ const generateAllProjects =  () => {
         
             const project_todos = getProjectTodos(project.id)
 
-
             generateAllTodos(project_todos)
 
             // changes the title of the todos_title field
@@ -147,4 +150,17 @@ const generateProjectTodos = (project) => {
                 </div>
     */
 
-export {generateAllTodos, generateAllProjects, hideSection}
+const toggleModal = () => {
+    const modal_div = document.getElementById("project-modal");
+    const overlay_div = document.getElementById("overlay");
+    if (modal_div.classList.contains("active") && overlay_div.classList.contains("active")) {
+        modal_div.classList.remove("active");
+        overlay_div.classList.remove("active")
+    }else {
+        modal_div.classList.add("active");
+        overlay_div.classList.add("active")
+    }
+
+}
+
+export {generateAllTodos, generateAllProjects, hideSection, toggleModal}

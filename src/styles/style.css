@@ -200,12 +200,26 @@ footer {
 .modal-body form {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 }
 
 .modal-body form button {
     min-width: 10%;
     max-width: 20%;
+}
+
+.modal-body div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.modal-body textarea {
+    min-width: 100px;
+    max-width: 300px;
+    min-height: 100px;
+    max-height: 300px;
+    resize: none;
 }
 
 #overlay {

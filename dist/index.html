@@ -44,7 +44,7 @@
         </div>
 
 
-        <div class="modal active" id="modal">
+        <div class="modal" id="project-modal">
             <div class="modal-header">
                 <div class="title">Create new project</div>
                 <button class="close-button">&times;</button>
@@ -54,7 +54,36 @@
                 <form action="" class="new-project-form">
                     <label for="project-name">Name: </label>
                     <input type="text" name="project-name" id="project-name">
-                    <button class="new-project-btn">Submit</button>
+                    <button class="create-project-btn">Create</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal active" id="todo-modal">
+            <div class="modal-header">
+                <div class="title">Create new TODO</div>
+                <button class="close-button">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" class="new-project-form">
+                    <div id="new-todo-name">
+                        <label for="todo-name">Name: </label>
+                        <input type="text" name="tood-name" id="tood-name" required>
+                    </div>
+                    <div id="new-todo-descritption">
+                        <label for="todo-description">Description: </label>
+                        <textarea id="todo-description" name="todo-description" placeholder="Enter your description here (not required)"></textarea>
+                    </div>
+                    <div id="new-todo-date">
+                        <label for="todo-date">Date: </label>
+                        <input type="date" id="todo-date" name="todo-date" required>
+                    </div>
+                    <div id="new-todo-priority">
+                        <label for="todo-priority">Urgent</label>
+                        <input type="checkbox" name="todo-priority" id="todo-priority">
+                    </div>
+                    <button class="create-project-btn">Create</button>
                 </form>
             </div>
         </div>
