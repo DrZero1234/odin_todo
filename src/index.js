@@ -1,13 +1,13 @@
 import "./styles/style.css"
 import {Todo,Project} from "./functions/todoClasses.js"
-import {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, getProjectTodos, defaulStorage} from "./functions/storage.js"
+import {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, getProjectTodos, defaulStorage, ModalAddTodo} from "./functions/storage.js"
 import {generateAllTodos,generateAllProjects, hideSection, toggleModal} from "./functions/DOMFunctions.js"
 
 // lel
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // defaulStorage()
+    //defaulStorage()
 
     console.log("Projects")
     console.log(getAllProjects())
@@ -30,8 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const new_project_btn = document.getElementById("new-project-btn")
     new_project_btn.addEventListener("click", toggleModal)
 
-    const close_modal_btn = document.querySelector(".close-button");
-    close_modal_btn.addEventListener("click",toggleModal)
+    const close_modal_btns = document.querySelectorAll(".close-button");
+    close_modal_btns.forEach((button) => {
+        button.addEventListener("click",toggleModal)
+    })
 
     const create_project_btn = document.querySelector(".create-project-btn");
     create_project_btn.addEventListener("click", () => {

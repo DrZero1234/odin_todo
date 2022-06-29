@@ -1,3 +1,4 @@
+import { toggleModal } from "./DOMFunctions";
 import { Project,Todo } from "./todoClasses";
 
 
@@ -80,6 +81,13 @@ function defaulStorage () {
     p1.pushTodo(todo2);
     p2.pushTodo(todo1);
 
+}
+
+function ModalAddTodo() {
+    const add_todo_btn = document.querySelector(".add-todo");
+    add_todo_btn.addEventListener("click", () => {
+        toggleModal()
+    })
 }
 
 export {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage, getProjectTodos}

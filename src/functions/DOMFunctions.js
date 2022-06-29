@@ -1,3 +1,4 @@
+import { add } from "date-fns";
 import { getAllTodos,getAllProjects,getProject, getProjectTodos } from "./storage"
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,16 +32,17 @@ const clearSection =  (section = TODOS_HTML) => {
 const generateAllTodos = (todo_list = getAllTodos()) => {
     const TODOS_HTML = document.querySelector(".todos");
 
-    clearSection(TODOS_HTML);
+    clearSection(TODOS_HTML)
 
     todo_list.forEach((todo) => {
+
         const todo_div = document.createElement("div");
         todo_div.className = "todo";
         todo_div.id = todo.id
 
         const todo_priority_elem = document.createElement("span");
         todo_priority_elem.id = "priority";
-        if (todo.priority === "urgent") {
+        if (todo.priority.toLowerCase() === "urgent".toLowerCase()) {
             todo_priority_elem.textContent = "!"
         }
 
@@ -98,7 +100,16 @@ const generateAllProjects =  () => {
 
     const PROJECT_LIST = getAllProjects()
 
+    const TODO_WRAPPER = document.querySelector(".todo-wrapper");
+
+
+
     clearSection(PROJECTS_HTML);
+
+    const project_title_html = document.createElement("h2");
+    project_title_html.id = "todos-title"
+
+
 
     const new_project_button = document.createElement("button");
     new_project_button.id = "new-project-btn"
@@ -106,28 +117,49 @@ const generateAllProjects =  () => {
     PROJECTS_HTML.appendChild(new_project_button)
 
     PROJECT_LIST.forEach((project) => {
+        clearSection(TODO_WRAPPER)
+
+
+
+
         const project_item = document.createElement("li");
         project_item.textContent = project.name;
         project_item.id = project.id
-
+        
 
         // TODO OPEN THE PROJECT & GENERATE ITS TODOS
         project_item.addEventListener("click", () => {
+
+            clearSection(TODOS_HTML)
+            clearSection(TODO_WRAPPER)
+
+            const add_todo_btn = document.createElement("button");
+            add_todo_btn.className = "add-todo";
+            add_todo_btn.id = project.id;
+            add_todo_btn.textContent = "+ Add Todo"
+
+            project_title_html.textContent = project.name
+
+            TODO_WRAPPER.appendChild(add_todo_btn)
+            TODO_WRAPPER.appendChild(project_title_html)
             
-        
             const project_todos = getProjectTodos(project.id)
 
             generateAllTodos(project_todos)
 
             // changes the title of the todos_title field
-            const todos_title_html = document.getElementById("todos-title")
-            todos_title_html.textContent = project.name
+            
+
+
+
         
         })
-        
         PROJECTS_HTML.appendChild(project_item)
 
+
     })
+    
+
 }
 
 const generateProjectTodos = (project) => {
@@ -150,9 +182,11 @@ const generateProjectTodos = (project) => {
                 </div>
     */
 
-const toggleModal = () => {
-    const modal_div = document.getElementById("project-modal");
+const toggleModal = (modal_type) => {
+    let modal_div = document.getElementById("project-modal");
     const overlay_div = document.getElementById("overlay");
+
+
     if (modal_div.classList.contains("active") && overlay_div.classList.contains("active")) {
         modal_div.classList.remove("active");
         overlay_div.classList.remove("active")
