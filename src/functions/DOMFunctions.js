@@ -1,5 +1,6 @@
 import { add } from "date-fns";
-import { getAllTodos,getAllProjects,getProject, getProjectTodos } from "./storage"
+import { getAllTodos,getAllProjects,getProject, getProjectTodos } from "./storage";
+import {Todo} from "./todoClasses"
 
 document.addEventListener("DOMContentLoaded", () => {
     
@@ -42,7 +43,7 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
 
         const todo_priority_elem = document.createElement("span");
         todo_priority_elem.id = "priority";
-        if (todo.priority.toLowerCase() === "urgent".toLowerCase()) {
+        if (todo.urgent === true) {
             todo_priority_elem.textContent = "!"
         }
 
@@ -138,6 +139,36 @@ const generateAllProjects =  () => {
             add_todo_btn.id = project.id;
             add_todo_btn.textContent = "+ Add Todo"
 
+            add_todo_btn.addEventListener("click", () => {
+
+                const PROJECT = getProject(project.id);
+
+                toggleTodoModal()
+
+                console.log(PROJECT)
+
+
+                const name_field = String(document.getElementById("todo-name").value);
+                const description_field = String(document.getElementById("todo-description").value);
+                const date_field = String(document.getElementById("todo-date").value);
+                const todo_priority_field = document.getElementById("todo-priority");
+
+                let priority;
+                if (todo_priority_field.checked) {
+                    priority = true
+                } else {
+                    priority = false;
+                }
+
+                const new_todo = new Todo(name_field,description_field,date_field,priority);
+                PROJECT.pushTodo(new_todo)
+        
+                // TODO redirect to new Project TODO´s after Creating a project
+
+                generateAllTodos(Array.from(PROJECT.project_todos));
+                
+            })
+
             project_title_html.textContent = project.name
 
             TODO_WRAPPER.appendChild(add_todo_btn)
@@ -182,19 +213,39 @@ const generateProjectTodos = (project) => {
                 </div>
     */
 
-const toggleModal = (modal_type) => {
-    let modal_div = document.getElementById("project-modal");
+
+// TODO MAKE THE TOGGLE MODAL INTO ONE SINGLE FUNCTION
+
+const toggleProjectModal =() => {
+
+    
+    const modal = document.getElementById("project-modal")
     const overlay_div = document.getElementById("overlay");
-
-
-    if (modal_div.classList.contains("active") && overlay_div.classList.contains("active")) {
-        modal_div.classList.remove("active");
+    
+    if (modal.classList.contains("active") && overlay_div.classList.contains("active")) {
+        modal.classList.remove("active");
         overlay_div.classList.remove("active")
     }else {
-        modal_div.classList.add("active");
+        modal.classList.add("active");
         overlay_div.classList.add("active")
     }
 
 }
 
-export {generateAllTodos, generateAllProjects, hideSection, toggleModal}
+const toggleTodoModal =() => {
+
+    
+    const modal = document.getElementById("todo-modal")
+    const overlay_div = document.getElementById("overlay");
+    
+    if (modal.classList.contains("active") && overlay_div.classList.contains("active")) {
+        modal.classList.remove("active");
+        overlay_div.classList.remove("active")
+    }else {
+        modal.classList.add("active");
+        overlay_div.classList.add("active")
+    }
+
+}
+
+export {generateAllTodos, generateAllProjects, hideSection, clearSection, toggleProjectModal, toggleTodoModal}

@@ -53,8 +53,6 @@ function getTodo(todo_id) {
 
 
 // Generates an array with all of the project´s todo Objects.
-
-
 function getProjectTodos(project_id) {
     let project_todos = []
     let todo_keys = Object.keys(getProject(project_id).project_todos)
@@ -66,14 +64,29 @@ function getProjectTodos(project_id) {
 
 }
 
+
+// Returns a list of todos based on a status for example if (status -> todo.urgent === value -> true)
+function getStatusTodos(status, value) {
+    const all_todos = getAllTodos();
+    const status_todos = [];
+    for (let todo of all_todos) {
+        if (todo[status] === value) {
+            status_todos.push(todo)
+        }
+    }
+    return status_todos
+}
+
+
+
 function defaulStorage () {
     resetStorage()
 
     let p1 = new Project("Project1")
     let p2 = new Project("Project2")
 
-    let todo1 = new Todo("Todo1","First todo", "2022-12-31","normal");
-    let todo2 = new Todo("Todo2", "Second todo", "1939-09-01","urgent");
+    let todo1 = new Todo("Todo1","First todo", "2022-12-31","normal",);
+    let todo2 = new Todo("Todo2", "Second todo", "1939-09-01",true);
 
     p1.storeProject();
     p2.storeProject();
@@ -83,11 +96,4 @@ function defaulStorage () {
 
 }
 
-function ModalAddTodo() {
-    const add_todo_btn = document.querySelector(".add-todo");
-    add_todo_btn.addEventListener("click", () => {
-        toggleModal()
-    })
-}
-
-export {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage, getProjectTodos}
+export {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage, getProjectTodos,getStatusTodos}

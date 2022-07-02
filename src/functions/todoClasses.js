@@ -20,12 +20,12 @@ class Project {
 }
 
 class Todo {
-    constructor(title,description,date,priority,status="unfinished"){
+    constructor(title,description,date,urgent = false,status="unfinished"){
         this.id = uuidv4()
         this.title = title;
         this.description = description;
         this.date = date;
-        this.priority = priority;
+        this.urgent = urgent;
         this.status = status
     }
 
