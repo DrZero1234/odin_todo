@@ -2,9 +2,6 @@ import { toggleModal } from "./DOMFunctions";
 import { Project,Todo } from "./todoClasses";
 
 
-function resetStorage() {
-    localStorage.clear()
-}
 
 // Generates an array of every TODO 
 function getAllTodos() {
@@ -80,20 +77,29 @@ function getStatusTodos(status, value) {
 
 
 function defaulStorage () {
-    resetStorage()
+    localStorage.clear()
 
     let p1 = new Project("Project1")
     let p2 = new Project("Project2")
 
-    let todo1 = new Todo("Todo1","First todo", "2022-12-31","normal",);
-    let todo2 = new Todo("Todo2", "Second todo", "1939-09-01",true);
+    let todo1 = new Todo("Todo1","First todo", "2022-12-31",false,);
+    let todo2 = new Todo("Todo2", "Second todo", "1939-09-01",true,);
+    let todo3 = new Todo("Todo3", "Third Todo", "2022-07-03",true,true);
 
     p1.storeProject();
     p2.storeProject();
     todo1.addTodo(p1);
     todo2.addTodo(p1);
+    todo3.addTodo(p2)
     todo1.addTodo(p2);
 
 }
 
-export {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, defaulStorage, getProjectTodos,getStatusTodos}
+function removeTodo(project_id,todo_id) {
+    const project = JSON.parse(localStorage.getItem(project_id)).project_todos;
+    console.log(project)
+    delete project[todo_id];
+
+}
+
+export {getAllTodos, getAllProjects, getProject, getTodo, defaulStorage, getProjectTodos,getStatusTodos, removeTodo}

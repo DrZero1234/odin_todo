@@ -1,13 +1,15 @@
 import "./styles/style.css"
 import {Todo,Project} from "./functions/todoClasses.js"
-import {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, getProjectTodos, defaulStorage, ModalAddTodo, getStatusTodos} from "./functions/storage.js"
-import {generateAllTodos,generateAllProjects, hideSection, toggleProjectModal, toggleTodoModal, clearSection} from "./functions/DOMFunctions.js"
+import {getAllTodos, getAllProjects, getProject, getTodo, resetStorage, getProjectTodos, defaulStorage, ModalAddTodo, getStatusTodos, removeTodo} from "./functions/storage.js"
+import {generateAllTodos,generateAllProjects, hideSection, toggleProjectModal, toggleTodoModal, clearSection, generateStatusTodos} from "./functions/DOMFunctions.js"
+import {getToday} from "./functions/otherFunctions.js"
 
 // lel
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    //defaulStorage()
+
+    defaulStorage()
 
     console.log(getStatusTodos("urgent", true))
 
@@ -32,43 +34,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const urgent_todos_html = document.getElementById("urgent-todos")
     const completed_todos_html = document.getElementById("completed-todos")
+    const today_todos_html = document.getElementById("date-todos")
 
 
     // Generates the urgent todo list to the HTML by clicking the Urgent sidebar menu
-    urgent_todos_html.addEventListener("click", () => {
-        clearSection(todo_wrapper_html)
-        let todos_title_html = document.getElementById("todos-title");
-        if (todos_title_html) {
-            todos_title_html.textContent = "Urgent todos"
-        } else {
-
-            // adds the title for the todo-list manually
-            const todo_title_elem = document.createElement("h2");
-            todo_title_elem.id = "todo-title";
-            todo_title_elem.textContent = "Urgent todos";
-            todo_wrapper_html.appendChild(todo_title_elem)
-        }
-        
-        generateAllTodos(getStatusTodos("urgent", true))
+    urgent_todos_html.addEventListener("click", () => {       
+        generateStatusTodos("urgent", true)
     })
 
+    // The list of completed todos in the HTML
     completed_todos_html.addEventListener("click", () => {
-        clearSection(todo_wrapper_html)
-        let todos_title_html = document.getElementById("todos-title");
-        if (todos_title_html) {
-            todos_title_html.textContent = "Urgent"
-        } else {
-
-            // adds the title for the todo-list manually
-            const todo_wrapper_html = document.querySelector(".todo-wrapper")
-            const todo_title_elem = document.createElement("h2");
-            todo_title_elem.id = "todo-title";
-            todo_title_elem.textContent = "Completed todos";
-            todo_wrapper_html.appendChild(todo_title_elem)
-        }
-        
-        generateAllTodos(getStatusTodos("status", "finished"))
+        generateStatusTodos("completed", true)
     })
+
+    // The list of completed today´s todos in HTML
+    today_todos_html.addEventListener("click", () => {
+        generateStatusTodos("date", getToday())
+    })
+
+
 
 
 

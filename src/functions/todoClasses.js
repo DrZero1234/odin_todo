@@ -15,13 +15,13 @@ class Project {
 }
 
 class Todo {
-    constructor(title,description,date,urgent = false,status="unfinished"){
+    constructor(title,description,date,urgent = false,){
         this.id = uuidv4()
         this.title = title;
         this.description = description;
         this.date = date;
         this.urgent = urgent;
-        this.status = status
+        this.completed = false
     }
 
     addTodo(project) {

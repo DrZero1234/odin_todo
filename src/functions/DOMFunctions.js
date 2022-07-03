@@ -1,5 +1,5 @@
 import { add } from "date-fns";
-import { getAllTodos,getAllProjects,getProject, getProjectTodos } from "./storage";
+import { getAllTodos,getAllProjects,getProject, getProjectTodos, getStatusTodos} from "./storage";
 import {Todo} from "./todoClasses"
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -32,14 +32,23 @@ const clearSection =  (section = TODOS_HTML) => {
 
 const generateAllTodos = (todo_list = getAllTodos()) => {
     const TODOS_HTML = document.querySelector(".todos");
+    const TODOS_WRAPPER = document.querySelector(".todo-wrapper");
 
     clearSection(TODOS_HTML)
+
+    // Does not add button if click on "Todos" sidebar menu
+    if (todo_list.sort().join(",") === getAllTodos().sort().join(",")) {
+        clearSection(TODOS_WRAPPER)
+    }
 
     todo_list.forEach((todo) => {
 
         const todo_div = document.createElement("div");
         todo_div.className = "todo";
         todo_div.id = todo.id
+
+        const todo_status_div = document.createElement("div");
+        todo_status_div.className = "todo-status";
 
         const todo_priority_elem = document.createElement("span");
         todo_priority_elem.id = "priority";
@@ -66,20 +75,34 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
 
         // TODO probably will need to change the IMG src
 
+        const completed_element = document.createElement("img");
+        completed_element.id = "completed-todo";
+        completed_element.setAttribute("src", "completed.png");
+        completed_element.setAttribute("alt", "Completed")
+
         const edit_element = document.createElement("img")
-        edit_element.id = "edit-todo"
+        edit_element.className = "edit-todo"
+        edit_element.id = todo.id
         edit_element.setAttribute("src","edit.png");
         edit_element.setAttribute("alt", "Edit")
 
         const delete_element = document.createElement("img")
-        delete_element.id = "del-todo"
+        delete_element.className = "delete-todo"
+        delete_element.id = todo.id
         delete_element.setAttribute("src","delete.png");
         delete_element.setAttribute("alt", "Delete")
+
+
+        if (todo.completed) {
+            todo_status_div.appendChild(completed_element)
+        }
+        todo_status_div.appendChild(todo_priority_elem);
+
 
         todo_actions_div.appendChild(edit_element);
         todo_actions_div.appendChild(delete_element)
 
-        todo_div.appendChild(todo_priority_elem);
+        todo_div.appendChild(todo_status_div)
         todo_div.appendChild(todo_title_elem);
         todo_div.appendChild(todo_description_elem);
         todo_div.appendChild(todo_date_elem)
@@ -142,8 +165,8 @@ const generateAllProjects =  () => {
             add_todo_btn.addEventListener("click", () => {
                 toggleTodoModal()
 
-                const create_todo_btn = document.getElementById("create-todo-btn")
-                create_todo_btn.addEventListener("click", () => {
+                const todo_modal = document.getElementById("todo-modal")
+                todo_modal.addEventListener("submit", () => {
 
                     const PROJECT = getProject(project.id);
                     console.log(PROJECT)
@@ -255,4 +278,33 @@ const toggleTodoModal =() => {
 
 }
 
-export {generateAllTodos, generateAllProjects, hideSection, clearSection, toggleProjectModal, toggleTodoModal}
+const generateStatusTodos = (status, value) => {
+    let message = (function(status) {
+        switch(status) {
+            case "urgent":
+                return "Urgent"
+            case "completed":
+                return "Completed"
+            case "date":
+                return "Today´s"
+        }
+    })
+
+    const todo_wrapper_html = document.querySelector(".todo-wrapper")
+    clearSection(todo_wrapper_html)
+    let todos_title_html = document.getElementById("todos-title");
+    if (todos_title_html) {
+        todos_title_html.textContent = `${message} todos`
+    } else {
+        // adds the title for the todo-list manually
+        const todo_wrapper_html = document.querySelector(".todo-wrapper")
+        const todo_title_elem = document.createElement("h2");
+        todo_title_elem.id = "todo-title";
+        todo_title_elem.textContent = `${message(status)} todos`
+        todo_wrapper_html.appendChild(todo_title_elem)
+    }
+    
+    generateAllTodos(getStatusTodos(status, value))
+}
+
+export {generateAllTodos, generateAllProjects, hideSection, clearSection, toggleProjectModal, toggleTodoModal, generateStatusTodos}
