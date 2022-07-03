@@ -90,9 +90,9 @@ function defaulStorage () {
 
     p1.storeProject();
     p2.storeProject();
-    p1.pushTodo(todo1);
-    p1.pushTodo(todo2);
-    p2.pushTodo(todo1);
+    todo1.addTodo(p1);
+    todo2.addTodo(p1);
+    todo1.addTodo(p2);
 
 }
 

@@ -140,32 +140,39 @@ const generateAllProjects =  () => {
             add_todo_btn.textContent = "+ Add Todo"
 
             add_todo_btn.addEventListener("click", () => {
-
-                const PROJECT = getProject(project.id);
-
                 toggleTodoModal()
 
-                console.log(PROJECT)
+                const create_todo_btn = document.getElementById("create-todo-btn")
+                create_todo_btn.addEventListener("click", () => {
+
+                    const PROJECT = getProject(project.id);
+                    console.log(PROJECT)
+    
+    
+                    const name_field = document.getElementById("todo-name").value;
+                    const description_field = document.getElementById("new-todo-description").value;
+                    const date_field = document.getElementById("todo-date").value;
+                    const todo_priority_field = document.getElementById("todo-priority");
+    
+                    let priority;
+                    if (todo_priority_field.checked) {
+                        priority = true
+                    } else {
+                        priority = false;
+                    }
+    
+                    
+    
+                    const new_todo = new Todo(name_field,description_field,date_field,priority);
+                    new_todo.addTodo(PROJECT);
+            
+                    // TODO redirect to new Project TODO´s after Creating a project
+    
+                    generateAllTodos(Array.from(PROJECT.project_todos));
+
+                })
 
 
-                const name_field = String(document.getElementById("todo-name").value);
-                const description_field = String(document.getElementById("todo-description").value);
-                const date_field = String(document.getElementById("todo-date").value);
-                const todo_priority_field = document.getElementById("todo-priority");
-
-                let priority;
-                if (todo_priority_field.checked) {
-                    priority = true
-                } else {
-                    priority = false;
-                }
-
-                const new_todo = new Todo(name_field,description_field,date_field,priority);
-                PROJECT.pushTodo(new_todo)
-        
-                // TODO redirect to new Project TODO´s after Creating a project
-
-                generateAllTodos(Array.from(PROJECT.project_todos));
                 
             })
 

@@ -12,11 +12,6 @@ class Project {
         return this
     }
 
-    pushTodo(todo){
-        this.project_todos[todo["id"]] = JSON.stringify(todo)
-        localStorage.setItem(this.id, JSON.stringify(this))
-
-    };
 }
 
 class Todo {
@@ -27,6 +22,11 @@ class Todo {
         this.date = date;
         this.urgent = urgent;
         this.status = status
+    }
+
+    addTodo(project) {
+        project.project_todos[this.id] = JSON.stringify(this);
+        localStorage.setItem(project.id, JSON.stringify(project))
     }
 
 }

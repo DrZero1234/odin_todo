@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // TODO redirect to new Project TODO´s after Creating a project
         new_project.storeProject();
+        console.log(new_project)
         const stored_project = getProject(new_project.id);
         toggleProjectModal()
         generateAllTodos(Array.from(stored_project.project_todos));
