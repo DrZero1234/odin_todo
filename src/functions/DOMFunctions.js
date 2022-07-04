@@ -1,24 +1,4 @@
-import { add } from "date-fns";
-import { getAllTodos,getAllProjects,getProject, getProjectTodos, getStatusTodos} from "./storage";
-import {Todo} from "./todoClasses"
-
-document.addEventListener("DOMContentLoaded", () => {
-    
-})
-
-const TODO_LIST = getAllTodos();
-
-
-
-
-// Clears the content of an HTML element
-const hideSection = (section) => {
-    if(section.className === "active") {
-        section.className = "inactive"
-    } else {
-        section.className = "active"
-    }
-}
+import {getAllProjects, getAllTodos, getProjectTodos, getStatusTodos} from "./storage.js"
 
 
 const clearSection =  (section = TODOS_HTML) => {
@@ -26,9 +6,23 @@ const clearSection =  (section = TODOS_HTML) => {
     while (section.firstChild) {
         section.removeChild(section.lastChild)
     }
-}
+};
 
-// Generates the list of todos in the main section
+const toggleTodoModal =() => {
+
+    
+    const modal = document.getElementById("todo-modal")
+    const overlay_div = document.getElementById("overlay");
+    
+    if (modal.classList.contains("active") && overlay_div.classList.contains("active")) {
+        modal.classList.remove("active");
+        overlay_div.classList.remove("active")
+    }else {
+        modal.classList.add("active");
+        overlay_div.classList.add("active")
+    }
+
+}
 
 const generateAllTodos = (todo_list = getAllTodos()) => {
     const TODOS_HTML = document.querySelector(".todos");
@@ -116,6 +110,7 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
 
 }
 
+
 const generateAllProjects =  () => {
 
     const TODOS_HTML = document.querySelector(".todos")
@@ -147,8 +142,7 @@ const generateAllProjects =  () => {
 
 
         const project_item = document.createElement("li");
-        project_item.textContent = project.name;
-        project_item.id = project.id
+        project_item.textContent = project;
         
 
         // TODO OPEN THE PROJECT & GENERATE ITS TODOS
@@ -168,7 +162,7 @@ const generateAllProjects =  () => {
                 const todo_modal = document.getElementById("todo-modal")
                 todo_modal.addEventListener("submit", () => {
 
-                    const PROJECT = getProject(project.id);
+                    const PROJECT = getProject(project);
                     console.log(PROJECT)
     
     
@@ -199,12 +193,12 @@ const generateAllProjects =  () => {
                 
             })
 
-            project_title_html.textContent = project.name
+            project_title_html.textContent = project
 
             TODO_WRAPPER.appendChild(add_todo_btn)
             TODO_WRAPPER.appendChild(project_title_html)
             
-            const project_todos = getProjectTodos(project.id)
+            const project_todos = getProjectTodos(project)
 
             generateAllTodos(project_todos)
 
@@ -216,56 +210,13 @@ const generateAllProjects =  () => {
         
         })
         PROJECTS_HTML.appendChild(project_item)
-
-
     })
-    
-
 }
-
-const generateProjectTodos = (project) => {
-    const TODOS_HTML = document.querySelector(".todos")
-    const project_todos = project.project_todos;
-    generateAllTodos(project_todos)
-}
-        // TODO HTML structure
-            /*
-
-                <div class="todo">
-                    <span id="priority">!</span>
-                    <h3 id="todo-title">Title</h3>
-                    <span id="todo-description">This is a test</span>
-                    <span id="todo-date">2022.06.12</span>
-                    <div class="todo-actions">
-                        <img src="edit.png" alt="Edit" id="edit-todo">
-                        <img src="delete.png" alt="Delete Todo" id="del-todo">
-                    </div>
-                </div>
-    */
-
-
-// TODO MAKE THE TOGGLE MODAL INTO ONE SINGLE FUNCTION
 
 const toggleProjectModal =() => {
 
     
     const modal = document.getElementById("project-modal")
-    const overlay_div = document.getElementById("overlay");
-    
-    if (modal.classList.contains("active") && overlay_div.classList.contains("active")) {
-        modal.classList.remove("active");
-        overlay_div.classList.remove("active")
-    }else {
-        modal.classList.add("active");
-        overlay_div.classList.add("active")
-    }
-
-}
-
-const toggleTodoModal =() => {
-
-    
-    const modal = document.getElementById("todo-modal")
     const overlay_div = document.getElementById("overlay");
     
     if (modal.classList.contains("active") && overlay_div.classList.contains("active")) {
@@ -307,4 +258,67 @@ const generateStatusTodos = (status, value) => {
     generateAllTodos(getStatusTodos(status, value))
 }
 
+
+
+/*
+document.addEventListener("DOMContentLoaded", () => {
+    
+})
+
+const TODO_LIST = getAllTodos();
+
+
+
+
+// Clears the content of an HTML element
+const hideSection = (section) => {
+    if(section.className === "active") {
+        section.className = "inactive"
+    } else {
+        section.className = "active"
+    }
+}
+
+
+
+
+// Generates the list of todos in the main section
+
+
+
+
+
+const generateProjectTodos = (project) => {
+    const TODOS_HTML = document.querySelector(".todos")
+    const project_todos = project.project_todos;
+    generateAllTodos(project_todos)
+}
+        // TODO HTML structure
+            /*
+
+                <div class="todo">
+                    <span id="priority">!</span>
+                    <h3 id="todo-title">Title</h3>
+                    <span id="todo-description">This is a test</span>
+                    <span id="todo-date">2022.06.12</span>
+                    <div class="todo-actions">
+                        <img src="edit.png" alt="Edit" id="edit-todo">
+                        <img src="delete.png" alt="Delete Todo" id="del-todo">
+                    </div>
+                </div>
+
+
+
+// TODO MAKE THE TOGGLE MODAL INTO ONE SINGLE FUNCTION
+
+
+
+
+
+
+
 export {generateAllTodos, generateAllProjects, hideSection, clearSection, toggleProjectModal, toggleTodoModal, generateStatusTodos}
+
+*/
+
+export {generateAllProjects, generateAllTodos ,generateStatusTodos, toggleProjectModal, toggleTodoModal}

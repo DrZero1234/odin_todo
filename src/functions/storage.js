@@ -1,43 +1,47 @@
-import { toggleModal } from "./DOMFunctions";
-import { Project,Todo } from "./todoClasses";
+
+import {Todo } from "./todoClasses";
 
 
 
 // Generates an array of every TODO 
-function getAllTodos() {
-    const todo_arr = []
 
-    for (let project of getAllProjects()) {
-        for (let todo_key of Object.keys(project.project_todos) ) {
-            todo_arr.push(JSON.parse(project.project_todos[todo_key]))
-        }
-    }
-
-    return todo_arr
-
-}
-
-
-// Generates an array of every Project
-function getAllProjects() {
-    let arr = []    
-
-    Object.keys(localStorage).forEach((key) => {
-        arr.push(JSON.parse(localStorage.getItem(key)))
+function addProject(project_name) {
+    const existing_projects = JSON.parse(localStorage.getItem("Projects"))
+    const lowercase_projects = existing_projects.map(element => {
+        return element.toLowerCase();
     })
-    return arr
-
-}
-
-// Grabs a project with a specific ID
-function getProject(project_id) {
-    for (let project of getAllProjects()) {
-        if (project.id === project_id) {
-            return project
-        }
+    if (lowercase_projects.includes(project_name.toLowerCase())) {
+        return false
+    } else {
+        existing_projects.push(project_name);
+        localStorage.setItem("Projects", JSON.stringify(existing_projects))
     }
 }
 
+function getAllProjects() {
+    return JSON.parse(localStorage.getItem("Projects"))
+}
+
+function getAllTodos()  {
+    const todo_list = [];
+    const storage_keys = Object.keys(localStorage);
+    storage_keys.forEach((key) => {
+        if (key !== "Projects") {
+            todo_list.push(JSON.parse(localStorage.getItem(key)))
+        }
+    })
+    return todo_list;
+}
+
+function getProjectTodos(project_name) {
+    const project_todos = [];
+    getAllTodos().forEach((todo) => {
+        if (todo.project === project_name) {
+            project_todos.push(todo);
+        }
+    })
+    return project_todos
+}
 
 //Grabs a todo with a specific ID
 function getTodo(todo_id) {
@@ -50,16 +54,7 @@ function getTodo(todo_id) {
 
 
 // Generates an array with all of the project´s todo Objects.
-function getProjectTodos(project_id) {
-    let project_todos = []
-    let todo_keys = Object.keys(getProject(project_id).project_todos)
-    todo_keys.forEach((key) => {
-        project_todos.push(JSON.parse(getProject(project_id).project_todos[key]))
-    })
 
-    return project_todos
-
-}
 
 
 // Returns a list of todos based on a status for example if (status -> todo.urgent === value -> true)
@@ -76,22 +71,21 @@ function getStatusTodos(status, value) {
 
 
 
-function defaulStorage () {
+function defaultStorage() {
     localStorage.clear()
+    localStorage.setItem("Projects", JSON.stringify([]))
 
-    let p1 = new Project("Project1")
-    let p2 = new Project("Project2")
+    addProject("Project1");
+    addProject("Project2");
 
-    let todo1 = new Todo("Todo1","First todo", "2022-12-31",false,);
-    let todo2 = new Todo("Todo2", "Second todo", "1939-09-01",true,);
-    let todo3 = new Todo("Todo3", "Third Todo", "2022-07-03",true,true);
+    let todo1 = new Todo("Project1","Todo1","First todo", "2022-12-31",false,);
+    let todo2 = new Todo("Project1","Todo2", "Second todo", "1939-09-01",true,);
+    let todo3 = new Todo("Project2","Todo3", "Third Todo", "2022-07-04",true,true);
 
-    p1.storeProject();
-    p2.storeProject();
-    todo1.addTodo(p1);
-    todo2.addTodo(p1);
-    todo3.addTodo(p2)
-    todo1.addTodo(p2);
+
+    todo1.addTodo();
+    todo2.addTodo();
+    todo3.addTodo()
 
 }
 
@@ -99,7 +93,6 @@ function removeTodo(project_id,todo_id) {
     const project = JSON.parse(localStorage.getItem(project_id)).project_todos;
     console.log(project)
     delete project[todo_id];
-
 }
 
-export {getAllTodos, getAllProjects, getProject, getTodo, defaulStorage, getProjectTodos,getStatusTodos, removeTodo}
+export {defaultStorage, getAllProjects, getAllTodos, getProjectTodos, getStatusTodos, addProject}
