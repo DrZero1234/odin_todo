@@ -1,4 +1,5 @@
-import {getAllProjects, getAllTodos, getProjectTodos, getStatusTodos} from "./storage.js"
+import {getAllProjects, getAllTodos, getProjectTodos, getStatusTodos,getTodo, removeTodo} from "./storage.js"
+import { Todo } from "./todoClasses.js";
 
 
 const clearSection =  (section = TODOS_HTML) => {
@@ -80,11 +81,45 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
         edit_element.setAttribute("src","edit.png");
         edit_element.setAttribute("alt", "Edit")
 
+        edit_element.addEventListener("click", ()=> {
+            toggleTodoModal();
+            document.getElementById("new-todo-title").textContent = "Edit Todo"
+            const edit_btn  = document.getElementById("create-todo-btn");
+            edit_btn.textContent = "Edit"
+            let edited_todo = getTodo(edit_element.id);
+            console.log(edited_todo)
+
+
+            document.getElementById("todo-name").value = edited_todo.title;
+            document.getElementById("new-todo-description").value = edited_todo.description
+            document.getElementById("todo-date").value = edited_todo.date
+            if (todo.urgent) {
+                document.getElementById("todo-priority").checked = true
+            } else {
+                document.getElementById("todo-priority").checked = false
+            }
+
+            edit_btn.addEventListener("submit", () => {
+
+            })
+            
+        })
+
         const delete_element = document.createElement("img")
         delete_element.className = "delete-todo"
         delete_element.id = todo.id
         delete_element.setAttribute("src","delete.png");
         delete_element.setAttribute("alt", "Delete")
+        if (todo.title === "Placeholder Todo") {
+            delete_element.style.pointerEvents = "none"
+            delete_element.style.opacity = .35;
+        }
+
+        delete_element.addEventListener("click", () => {
+            let todo_project = getTodo(delete_element.id).project
+            removeTodo(delete_element.id)
+            generateAllTodos(getProjectTodos(todo_project))
+        })
 
 
         if (todo.completed) {
@@ -123,7 +158,7 @@ const generateAllProjects =  () => {
 
 
 
-    clearSection(PROJECTS_HTML);
+    //clearSection(PROJECTS_HTML);
 
     const project_title_html = document.createElement("h2");
     project_title_html.id = "todos-title"
@@ -148,13 +183,14 @@ const generateAllProjects =  () => {
         // TODO OPEN THE PROJECT & GENERATE ITS TODOS
         project_item.addEventListener("click", () => {
 
-            clearSection(TODOS_HTML)
+            //clearSection(TODOS_HTML)
             clearSection(TODO_WRAPPER)
 
             const add_todo_btn = document.createElement("button");
             add_todo_btn.className = "add-todo";
-            add_todo_btn.id = project.id;
+            add_todo_btn.id = project;
             add_todo_btn.textContent = "+ Add Todo"
+            TODO_WRAPPER.appendChild(add_todo_btn)
 
             add_todo_btn.addEventListener("click", () => {
                 toggleTodoModal()
@@ -162,8 +198,6 @@ const generateAllProjects =  () => {
                 const todo_modal = document.getElementById("todo-modal")
                 todo_modal.addEventListener("submit", () => {
 
-                    const PROJECT = getProject(project);
-                    console.log(PROJECT)
     
     
                     const name_field = document.getElementById("todo-name").value;
@@ -180,12 +214,12 @@ const generateAllProjects =  () => {
     
                     
     
-                    const new_todo = new Todo(name_field,description_field,date_field,priority);
-                    new_todo.addTodo(PROJECT);
+                    const new_todo = new Todo(project,name_field,description_field,date_field,priority);
+                    new_todo.addTodo();
             
                     // TODO redirect to new Project TODO´s after Creating a project
     
-                    generateAllTodos(Array.from(PROJECT.project_todos));
+                    generateAllTodos(getProjectTodos(project));
 
                 })
 
@@ -195,7 +229,7 @@ const generateAllProjects =  () => {
 
             project_title_html.textContent = project
 
-            TODO_WRAPPER.appendChild(add_todo_btn)
+
             TODO_WRAPPER.appendChild(project_title_html)
             
             const project_todos = getProjectTodos(project)

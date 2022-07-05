@@ -1,4 +1,5 @@
 import {v4 as uuidv4} from "uuid";
+import { getAllTodos } from "./storage";
 
 
 class Todo {
@@ -13,7 +14,14 @@ class Todo {
     }
 
     addTodo() {
-        localStorage.setItem(this.id, JSON.stringify(this))
+        let todo_titles = getAllTodos().map(element => {
+            return element.title
+        });
+        if (todo_titles.includes(this.title) === false) {
+            localStorage.setItem(this.id, JSON.stringify(this))
+        }
+        
+        
     }
 
 }

@@ -1,4 +1,4 @@
-
+import { getToday } from "./otherFunctions";
 import {Todo } from "./todoClasses";
 
 
@@ -75,12 +75,13 @@ function defaultStorage() {
     localStorage.clear()
     localStorage.setItem("Projects", JSON.stringify([]))
 
-    addProject("Project1");
+
     addProject("Project2");
+
 
     let todo1 = new Todo("Project1","Todo1","First todo", "2022-12-31",false,);
     let todo2 = new Todo("Project1","Todo2", "Second todo", "1939-09-01",true,);
-    let todo3 = new Todo("Project2","Todo3", "Third Todo", "2022-07-04",true,true);
+    let todo3 = new Todo("Project2","Todo3", "Third Todo", getToday(),true,true);
 
 
     todo1.addTodo();
@@ -89,10 +90,9 @@ function defaultStorage() {
 
 }
 
-function removeTodo(project_id,todo_id) {
-    const project = JSON.parse(localStorage.getItem(project_id)).project_todos;
-    console.log(project)
-    delete project[todo_id];
+function removeTodo(todo_id) {
+    localStorage.removeItem(todo_id);
 }
 
-export {defaultStorage, getAllProjects, getAllTodos, getProjectTodos, getStatusTodos, addProject}
+
+export {defaultStorage, getAllProjects, getAllTodos, getProjectTodos, getStatusTodos, addProject,getTodo,removeTodo}

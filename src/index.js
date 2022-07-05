@@ -2,12 +2,19 @@ import "./styles/style.css";
 import {defaultStorage, getAllTodos, addProject} from "./functions/storage.js";
 import {generateAllProjects, generateAllTodos ,generateStatusTodos, toggleProjectModal, toggleTodoModal} from "./functions/DOMFunctions.js";
 import {getToday} from "./functions/otherFunctions.js"
+import {Todo,Project} from "./functions/todoClasses.js"
 
 document.addEventListener("DOMContentLoaded", () => {
-    //defaultStorage();
+
+
+    let todo_placeholder = new Todo("Project1", "Placeholder Todo", "Description", "1900-01-01")
+    addProject("Project1");
+    todo_placeholder.addTodo()
+
     generateAllProjects();
+
     console.log(getAllTodos());
-    addProject("lel")
+    generateAllTodos()
 
     const new_project_btn = document.getElementById("new-project-btn")
     new_project_btn.addEventListener("click", toggleProjectModal)
@@ -32,8 +39,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sidebar_todos.addEventListener("click", () => {
         generateAllTodos()
+
+        const todo_wrapper = document.querySelector(".todo-wrapper")
         const todos_title_html = document.getElementById("todos-title")
-        todos_title_html.textContent = "Every Todos"
+        if (todos_title_html) {
+            todos_title_html.textContent = "Every Todos"
+        } else {
+            let title_elem = document.createElement("h2");
+            title_elem.id = "todos-title";
+            title_elem.textContent = "All todos";
+            todo_wrapper.appendChild(title_elem);
+        }
+
+        
     })
 
     const urgent_todos_html = document.getElementById("urgent-todos")
