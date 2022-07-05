@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     todo_placeholder.addTodo()
 
     generateAllProjects();
-
     console.log(getAllTodos());
     generateAllTodos()
 
