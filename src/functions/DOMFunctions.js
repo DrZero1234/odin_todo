@@ -1,3 +1,4 @@
+import { stringify } from "uuid";
 import {getAllProjects, getAllTodos, getProjectTodos, getStatusTodos,getTodo, removeTodo} from "./storage.js"
 import { Todo } from "./todoClasses.js";
 
@@ -99,7 +100,19 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
                 document.getElementById("todo-priority").checked = false
             }
 
-            edit_btn.addEventListener("submit", () => {
+            const todo_modal = document.getElementById("todo-modal")
+            todo_modal.addEventListener("submit", () => {
+                let edited_todo = getTodo(edit_element.id);
+                edited_todo.title = document.getElementById("todo-name").value;
+                edited_todo.description =  document.getElementById("new-todo-description").value;
+                edited_todo.date = document.getElementById("todo-date").value;
+                if (document.getElementById("todo-priority").checked) {
+                    edited_todo.urgent = true
+                } else {
+                    edited_todo.urgent = false 
+                }
+                localStorage.setItem(edited_todo.id, JSON.stringify(edited_todo));
+
 
             })
             
@@ -121,6 +134,25 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
             generateAllTodos(getProjectTodos(todo_project))
         })
 
+        const finsished_element = document.createElement("img");
+        finsished_element.className = "finished-todo";
+        finsished_element.id = todo.id;
+        finsished_element.setAttribute("src", "finished.png");
+        finsished_element.setAttribute("alt", "Todo finsihed");
+
+        finsished_element.addEventListener("click", () => {
+            todo = getTodo(finsished_element.id);
+            if (todo.completed) {
+                todo.completed = false;
+            } else {
+                todo.completed = true
+            }
+            localStorage.setItem(todo.id, JSON.stringify(todo));
+            generateAllTodos(getProjectTodos(todo.project))
+
+        })
+
+
 
         if (todo.completed) {
             todo_status_div.appendChild(completed_element)
@@ -130,6 +162,7 @@ const generateAllTodos = (todo_list = getAllTodos()) => {
 
         todo_actions_div.appendChild(edit_element);
         todo_actions_div.appendChild(delete_element)
+        todo_actions_div.appendChild(finsished_element)
 
         todo_div.appendChild(todo_status_div)
         todo_div.appendChild(todo_title_elem);
